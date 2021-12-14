@@ -1,60 +1,111 @@
-import Logo from "../logo/Logo";
 import "./style.css";
+import { useState } from "react";
+
+const filtersDefault = [
+  {
+    name: "Limiarização",
+    selected: false,
+  },
+
+  {
+    name: "Escala de cinza",
+    selected: false,
+  },
+
+  {
+    name: "Passa Alta",
+    selected: false,
+  },
+
+  {
+    name: "Passa Baixa",
+    selected: false,
+  },
+
+  {
+    name: "Roberts",
+    selected: false,
+  },
+
+  {
+    name: "Prewitt",
+    selected: false,
+  },
+
+  {
+    name: "Sobel",
+    selected: false,
+  },
+
+  {
+    name: "Log",
+    selected: false,
+  },
+
+  {
+    name: "Zerocross",
+    selected: false,
+  },
+
+  {
+    name: "Canny",
+    selected: false,
+  },
+
+  {
+    name: "Ruídos(salt and pepper, etc)",
+    selected: false,
+  },
+
+  {
+    name: "Watershed",
+    selected: false,
+  },
+
+  {
+    name: "Histograma (Escala de cinza)",
+    selected: false,
+  },
+
+  {
+    name: "Ajuste adaptativo de histograma",
+    selected: false,
+  },
+
+  {
+    name: "Contagem simples de objetos",
+    selected: false,
+  },
+];
 
 export default function Sidebar() {
+  const [filters, setFilters] = useState(filtersDefault);
+
+  function select(name) {
+    const newFilters = filters.map((f) => {
+      return {
+        name: f.name,
+        selected: f.name === name,
+      };
+    });
+    setFilters(newFilters);
+  }
+
   return (
     <div className="side-bar">
-      <Logo />
-
       <div className="algorithm-techniques">
         <h2>Algoritmos/Técnicas</h2>
 
         <ul>
-          <li className="selected">
-            <h3>Limiarização</h3>
-          </li>
-          <li>
-            <h3>Escala de cinza</h3>
-          </li>
-          <li>
-            <h3>Passa Alta</h3>
-          </li>
-          <li>
-            <h3>Passa Baixa</h3>
-          </li>
-          <li>
-            <h3>Roberts</h3>
-          </li>
-          <li>
-            <h3>Prewitt</h3>
-          </li>
-          <li>
-            <h3>Sobel</h3>
-          </li>
-          <li>
-            <h3>Log</h3>
-          </li>
-          <li>
-            <h3>Zerocross</h3>
-          </li>
-          <li>
-            <h3>Canny</h3>
-          </li>
-          <li>
-            <h3>Ruídos(salt and pepper, etc)</h3>
-          </li>
-          <li>
-            <h3>Watershed</h3>
-          </li>
-          <li>
-            <h3>Histograma (Escala de cinza)</h3>
-          </li>
-          <li>
-            <h3>Ajuste adaptativo de histograma</h3>
-          </li>
-          <li>
-            <h3>Contagem simples de objetos</h3>
-          </li>
+          {filters.map((f) => (
+            <li
+              onClick={() => select(f.name)}
+              key={f.name}
+              className={f.selected ? "selected" : ""}
+            >
+              <h3>{f.name}</h3>
+            </li>
+          ))}
         </ul>
       </div>
     </div>

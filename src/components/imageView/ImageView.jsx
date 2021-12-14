@@ -1,7 +1,9 @@
+import "./styles.css";
+
 export default function ImageView() {
   return (
-    <div>
-      <h1>Image View</h1>
+    <div className="img-container">
+      <img src="img.png" alt="img" />
     </div>
   );
 }

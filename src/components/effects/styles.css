@@ -1,0 +1,61 @@
+.effects-container {
+  width: 25%;
+  background: #fff;
+
+  padding: 15px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.effects-container > h2 {
+  font-size: 17px;
+  margin-left: 10px;
+  margin-right: 10px;
+  color: #2c3e50;
+  margin-bottom: 10px;
+
+  border-bottom: 1px solid #eeeeee;
+  padding-bottom: 5px;
+}
+
+.params {
+  margin-bottom: auto;
+}
+
+.btns {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btns button {
+  height: 40px;
+  outline: none;
+  border: none;
+
+  border-radius: 5px;
+  width: 90px;
+
+  padding: 5px;
+
+  background: #8c4bff;
+
+  color: #fff;
+  font-weight: bold;
+  font-size: 12px;
+
+  cursor: pointer;
+}
+
+.btns button:hover {
+  opacity: 0.7;
+}
+
+.btns button:active {
+  opacity: 0.5;
+}
+
+.params {
+}
