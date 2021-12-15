@@ -1,9 +1,9 @@
 import "./styles.css";
 
-export default function ImageView() {
+export default function ImageView({ imageUrl }) {
   return (
     <div className="img-container">
-      <img src="img.png" alt="img" />
+      <img src={imageUrl || ""} alt="img" />
     </div>
   );
 }
