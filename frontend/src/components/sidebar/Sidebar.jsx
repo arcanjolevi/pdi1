@@ -1,11 +1,155 @@
 import "./style.css";
 import { useState } from "react";
+import { Flex, Button, Heading, Input } from "@chakra-ui/react";
+import { useRef } from "react";
+import { toast } from "react-hot-toast";
+import api from "../../services/api";
+import { MdBuild } from "react-icons/md";
+
+export default function Sidebar({
+  setEffectTitle,
+  applyEffect,
+  btnRef,
+  onOpen,
+  popStack,
+  setCurrentParams,
+  setImage,
+  pushStack,
+}) {
+  const [filters, setFilters] = useState(filtersDefault);
+
+  const inputRef = useRef();
+
+  function select(name) {
+    const newFilters = filters.map((f) => {
+      return {
+        ...f,
+        selected: f.name === name,
+      };
+    });
+    setFilters(newFilters);
+  }
+
+  const changeHandler = (event) => {
+    const formData = new FormData();
+    formData.append("image", event.target.files[0]);
+
+    toast
+      .promise(
+        api.post("api/image", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }),
+        {
+          loading: "Carregando imagem...",
+          success: <b>Imagem carregada com sucesso!</b>,
+          error: <b>Falha no upload da imagem.</b>,
+        }
+      )
+      .then((r) => {
+        setImage(r.data.filename);
+        pushStack(r.data.filename);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  return (
+    <div className="side-bar">
+      <Flex alignItems="center" justifyContent="center" padding="10px">
+        <MdBuild color="#220049" size={20} />
+        <Heading marginLeft="10px" color="#220049" fontSize="20px">
+          Algoritmos/Técnicas
+        </Heading>
+      </Flex>
+      <div className="algorithm-techniques">
+        <ul>
+          {filters.map((f) => (
+            <li key={f.name}>
+              <Button
+                width="100%"
+                justifyContent="flex-start"
+                colorScheme="purple"
+                variant={"ghost"}
+                borderBottom="1px solid #eee"
+                btnRef={btnRef}
+                onClick={() => {
+                  select(f.name);
+                  if (f.params) {
+                    setCurrentParams(f.params);
+                    onOpen();
+                  }
+                }}
+              >
+                {f.name}
+              </Button>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <Flex width="100%" paddingY="10px" justifyContent="space-evenly">
+        <Input
+          display="none"
+          onChange={changeHandler}
+          ref={inputRef}
+          type="file"
+          colorScheme="purple"
+        />
+        <Button onClick={popStack} colorScheme="purple">
+          Desfazer
+        </Button>
+        <Button onClick={() => inputRef.current.click()} colorScheme="purple">
+          Carregar Imagem
+        </Button>
+      </Flex>
+    </div>
+  );
+}
 
 const filtersDefault = [
   {
     name: "Limiarização",
     selected: false,
     effectTitle: "Effect Title",
+    params: [
+      {
+        type: "selector",
+        title: "Tipo de limiarização",
+        options: [
+          {
+            title: "Binario",
+            value: "0",
+          },
+          {
+            title: "Binario Inverso",
+            value: "1",
+          },
+          {
+            title: "Truncamento",
+            value: "2",
+          },
+          {
+            title: "To zero",
+            value: "3",
+          },
+          {
+            title: "To Zero Inverso",
+            value: "4",
+          },
+        ],
+      },
+      {
+        type: "spinner",
+        title: "Peso limiarização",
+        range0: 0,
+        range1: 255,
+        default: 127,
+        step: 1,
+      },
+    ],
   },
 
   {
@@ -18,12 +162,72 @@ const filtersDefault = [
     name: "Passa Alta",
     selected: false,
     effectTitle: "Effect Title",
+    params: [
+      {
+        type: "spinner",
+        range0: 0,
+        range1: 100,
+        default: 3,
+        title: "Ordem do filtro",
+        step: 1,
+      },
+    ],
   },
 
   {
-    name: "Passa Baixa",
+    name: "Passa Alta - Alto Reforço",
     selected: false,
     effectTitle: "Effect Title",
+    params: [
+      {
+        type: "spinner",
+        range0: 0,
+        range1: 100,
+        default: 3,
+        title: "Ordem do filtro",
+        step: 1,
+      },
+      {
+        type: "spinner",
+        title: "Constante A",
+        range0: 0,
+        range1: 100,
+        default: 3,
+        step: 0.1,
+      },
+    ],
+  },
+
+  {
+    name: "Passa Baixa (Mediana)",
+    selected: false,
+    effectTitle: "Effect Title",
+    params: [
+      {
+        type: "spinner",
+        range0: 1,
+        range1: 99,
+        default: 3,
+        title: "Ordem do filtro",
+        step: 2,
+      },
+    ],
+  },
+
+  {
+    name: "Passa Baixa (Média)",
+    selected: false,
+    effectTitle: "Effect Title",
+    params: [
+      {
+        type: "spinner",
+        range0: 0,
+        range1: 100,
+        default: 3,
+        title: "Ordem do filtro",
+        step: 1,
+      },
+    ],
   },
 
   {
@@ -42,6 +246,22 @@ const filtersDefault = [
     name: "Sobel",
     selected: false,
     effectTitle: "Effect Title",
+    params: [
+      {
+        type: "selector",
+        title: "Direção",
+        options: [
+          {
+            title: "Vertical",
+            value: "0",
+          },
+          {
+            title: "Horizontal",
+            value: "1",
+          },
+        ],
+      },
+    ],
   },
 
   {
@@ -66,6 +286,34 @@ const filtersDefault = [
     name: "Ruídos(salt and pepper, etc)",
     selected: false,
     effectTitle: "Effect Title",
+    params: [
+      {
+        type: "selector",
+        title: "Tipo de ruído",
+        options: [
+          {
+            title: "Salt and pepper",
+            value: "0",
+          },
+          {
+            title: "Gaussian",
+            value: "1",
+          },
+          {
+            title: "Localvar",
+            value: "2",
+          },
+          {
+            title: "Speckle",
+            value: "3",
+          },
+          {
+            title: "Poison",
+            value: "4",
+          },
+        ],
+      },
+    ],
   },
 
   {
@@ -92,40 +340,3 @@ const filtersDefault = [
     effectTitle: "Effect Title",
   },
 ];
-
-export default function Sidebar({ setEffectTitle }) {
-  const [filters, setFilters] = useState(filtersDefault);
-
-  function select(name) {
-    const newFilters = filters.map((f) => {
-      return {
-        ...f,
-        selected: f.name === name,
-      };
-    });
-    setFilters(newFilters);
-  }
-
-  return (
-    <div className="side-bar">
-      <div className="algorithm-techniques">
-        <h2>Algoritmos/Técnicas</h2>
-
-        <ul>
-          {filters.map((f) => (
-            <li
-              onClick={() => {
-                select(f.name);
-                setEffectTitle(f.effectTitle);
-              }}
-              key={f.name}
-              className={f.selected ? "selected" : ""}
-            >
-              <h3>{f.name}</h3>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  );
-}
