@@ -21,14 +21,20 @@ import {
 import React, { useCallback, useState } from "react";
 import toast from "react-hot-toast";
 
-export function Rightbar({ isOpen, onClose, btnRef, currentParams }) {
+export function Rightbar({
+  isOpen,
+  onClose,
+  btnRef,
+  currentEffect,
+  applyEffectWithParams,
+}) {
   const [param0, setParam0] = useState(-1);
   const [param1, setParam1] = useState(-1);
   const [param2, setParam2] = useState(-1);
   const [param3, setParam3] = useState(-1);
 
   function handleApply() {
-    const n = currentParams.length;
+    const n = currentEffect.params.length;
     let count = param0 === -1 ? 1 : 0;
     count = count + (param1 === -1 ? 1 : 0);
     count = count + (param2 === -1 ? 1 : 0);
@@ -38,8 +44,25 @@ export function Rightbar({ isOpen, onClose, btnRef, currentParams }) {
       return;
     }
 
-    console.log(param0);
-    console.log(param1);
+    let sendParams = {};
+
+    if (param0 !== -1) {
+      sendParams.param0 = param0;
+    }
+
+    if (param1 !== -1) {
+      sendParams.param1 = param1;
+    }
+
+    if (param2 !== -1) {
+      sendParams.param2 = param2;
+    }
+
+    if (param3 !== -1) {
+      sendParams.param3 = param3;
+    }
+
+    applyEffectWithParams(sendParams);
 
     setParam0(-1);
     setParam1(-1);
@@ -84,8 +107,8 @@ export function Rightbar({ isOpen, onClose, btnRef, currentParams }) {
           <DrawerHeader>Parâmetros</DrawerHeader>
 
           <DrawerBody>
-            {currentParams &&
-              currentParams.map((p, i) => {
+            {currentEffect &&
+              currentEffect.params.map((p, i) => {
                 return (
                   <Param
                     options={p.options}

@@ -1,13 +1,19 @@
-.img-container {
+.img-container,
+.img-container2 {
   width: 75%;
   height: 100%;
   display: flex;
+
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
 
   background: #e5e5e5;
 }
 
 .img-container img {
-  max-width: 690px;
+  max-width: 700px;
+}
+
+.img-container2 img {
+  max-width: 400px;
 }
