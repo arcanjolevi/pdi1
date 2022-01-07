@@ -30,5 +30,6 @@ app.post("/highpassaverage", routes.highpassaverage);
 app.post("/grayscale", routes.grayscale);
 app.post("/canny", routes.canny);
 app.post("/count", routes.count);
+app.post("/log", routes.log);
 
 app.listen(port, () => console.log(`Server connected to ${port}`));

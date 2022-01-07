@@ -14,6 +14,7 @@ const { highpassaverage } = require("./controller/highPassAverage");
 const { grayscale } = require("./controller/grayscale");
 const { canny } = require("./controller/canny");
 const { count } = require("./controller/count");
+const { log } = require("./controller/log");
 const { imageUpload } = require("./controller/imageUpload");
 
 module.exports = {
@@ -34,4 +35,5 @@ module.exports = {
   canny,
   count,
   imageUpload,
+  log,
 };
