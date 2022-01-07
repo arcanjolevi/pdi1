@@ -1,8 +1,12 @@
 const { PythonShell } = require("python-shell");
 
 const sobel = (req, res) => {
-  const { filename } = req.body;
+  let { filename, param0 } = req.body;
   const outputFile = `uploads/sobel-${Date.now()}.jpg`;
+
+  if (typeof param0 === "undefined" || !param0) {
+    param0 = 1;
+  }
 
   if (typeof filename === "undefined" || !filename) {
     return res.status(400).send({ error: "Bad Request" });
@@ -12,11 +16,14 @@ const sobel = (req, res) => {
     mode: "text",
     pythonOptions: ["-u"],
     scriptPath: "./scripts",
-    args: [`./${filename}`, `./${outputFile}`],
+    args: [`./${filename}`, `./${outputFile}`, param0],
   };
 
   PythonShell.run("sobel.py", options, function (err, result) {
-    if (err) throw err;
+    if (err) {
+      console.log(err);
+      return res.status(501).send({ error: "Internal error" });
+    }
 
     res.send({ sentImage: filename, result: outputFile });
   });

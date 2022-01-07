@@ -20,7 +20,10 @@ const lowpassmedian = (req, res) => {
   };
 
   PythonShell.run("lowPassMedian.py", options, function (err, result) {
-    if (err) throw err;
+    if (err) {
+      console.log(err);
+      return res.status(501).send({ error: "Internal error" });
+    }
 
     res.send({ sentImage: filename, result: outputFile });
   });

@@ -13,7 +13,7 @@ direction = int(sys.argv[3])
 gradX = cv2.Sobel(image, cv2.CV_64F, 1, 0)
 gradY = cv2.Sobel(image, cv2.CV_64F, 0, 1)
 
-if(int(direction == 1)):
+if(direction == 1):
     cv2.imwrite(sys.argv[2], gradX)
 else:
     cv2.imwrite(sys.argv[2], gradY)

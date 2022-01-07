@@ -13,7 +13,7 @@ hp = highpass(img, value)
 
 
 data = np.array(img, dtype=float)
-A = sys.argv[4]
+A = int(sys.argv[4])
 A = A - 1
 ar = (data * A) + hp
 
