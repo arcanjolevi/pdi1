@@ -1,10 +1,14 @@
 const { PythonShell } = require("python-shell");
 
 const noise = (req, res) => {
-  let { filename, param0 } = req.body;
+  let { filename, param0, param1 } = req.body;
   const outputFile = `uploads/noise-${Date.now()}.jpg`;
 
   if (typeof param0 === "undefined" || !param0) {
+    param0 = 0;
+  }
+
+  if (typeof param1 === "undefined" || !param1) {
     param0 = 0;
   }
 
@@ -16,7 +20,7 @@ const noise = (req, res) => {
     mode: "text",
     pythonOptions: ["-u"],
     scriptPath: "./scripts",
-    args: [`./${filename}`, `./${outputFile}`, param0],
+    args: [`./${filename}`, `./${outputFile}`, param0, param1],
   };
 
   PythonShell.run("noise.py", options, function (err, result) {

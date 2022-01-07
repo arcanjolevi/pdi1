@@ -35,6 +35,6 @@ countImage = nImage.copy()
 for (i, c) in enumerate(cnts):
     ((x, y), _) = cv2.minEnclosingCircle(c)
     cv2.putText(countImage, "#{}".format(i + 1), (int(x)-20, int(y)),
-    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1)
+    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 200, 0), 1)
 
 cv2.imwrite(sys.argv[2], countImage)
