@@ -1,6 +1,5 @@
 import sys
 import cv2 as cv
-import argparse
 
 src = cv.imread(sys.argv[1])
 
