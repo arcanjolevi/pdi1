@@ -1,11 +1,15 @@
 import sys
 import cv2
+import numpy as np
 
-def highpass(img, sigma):
-    return img - cv2.GaussianBlur(img, (0,0), sigma)
 
 value = int(sys.argv[3])
-img = cv2.imread(sys.argv[1])
-img = highpass(img, value)
 
-cv2.imwrite(sys.argv[2], img)
+img = cv2.imread(sys.argv[1])
+data = np.array(img, dtype=float)
+lowpass = cv2.GaussianBlur(data, (value, value), 0)
+highpass = data - lowpass
+
+
+
+cv2.imwrite(sys.argv[2], highpass)

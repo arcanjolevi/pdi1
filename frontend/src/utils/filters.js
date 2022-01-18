@@ -57,11 +57,11 @@ export const filtersDefault = [
     params: [
       {
         type: "spinner",
-        range0: 0,
-        range1: 100,
+        range0: 3,
+        range1: 99,
         default: 3,
         title: "Ordem do filtro",
-        step: 1,
+        step: 3,
       },
     ],
   },
@@ -74,11 +74,11 @@ export const filtersDefault = [
     params: [
       {
         type: "spinner",
-        range0: 0,
-        range1: 100,
+        range0: 3,
+        range1: 99,
         default: 3,
         title: "Ordem do filtro",
-        step: 1,
+        step: 3,
       },
       {
         type: "spinner",
@@ -150,12 +150,16 @@ export const filtersDefault = [
         title: "Direção",
         options: [
           {
-            title: "Vertical",
+            title: "Horizontal",
             value: "0",
           },
           {
-            title: "Horizontal",
+            title: "Vertical",
             value: "1",
+          },
+          {
+            title: "Horizontal+Vertical",
+            value: "2",
           },
         ],
       },
