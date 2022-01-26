@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const port = 8000;
+const port = 9000;
 
 export const apiBaseUrl = `https://pdi-trabalho1-levi-arcanjo.herokuapp.com/`;
 //export const apiBaseUrl = `http://localhost:${port}/`;
