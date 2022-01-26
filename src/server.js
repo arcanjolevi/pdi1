@@ -14,6 +14,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
+app.get("/hello", (req, res) => {
+  return res.json({ msg: "Welcome to this app" });
+});
 app.post("/api/image", upload.single("image"), routes.imageUpload);
 app.post("/histogram", routes.histogram);
 app.post("/threshold", routes.threshold);
