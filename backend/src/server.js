@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
@@ -6,7 +7,7 @@ const path = require("path");
 const routes = require("./routes");
 const { upload } = require("./multer");
 
-const port = 8000;
+const port = process.env.PORT || 8000;
 
 app.use(cors());
 app.use(bodyParser.json());
