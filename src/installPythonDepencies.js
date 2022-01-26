@@ -7,6 +7,8 @@ let options = {
   args: [],
 };
 PythonShell.run("install_package.py", options, function (err, results) {
-  if (err) throw err;
-  else console.log(results);
+  if (err) {
+	console.log(err)
+	throw err;
+}  else console.log(results, 'Python dependencies installed');
 });
