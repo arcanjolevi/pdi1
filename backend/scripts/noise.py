@@ -4,14 +4,6 @@ from skimage.util import random_noise
 from skimage import io
 import sys
 
-
-#modes
-#s&p
-#gaussian
-#localvar
-#speckle
-#poisson
-
 noise = int(sys.argv[3])
 noise_name = ''
 
