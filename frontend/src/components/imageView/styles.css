@@ -12,8 +12,10 @@
 
 .img-container img {
   max-width: 700px;
+  max-height: 500px;
 }
 
 .img-container2 img {
   max-width: 400px;
+  max-height: 400px;
 }
