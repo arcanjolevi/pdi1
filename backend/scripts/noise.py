@@ -9,6 +9,7 @@ noise_name = ''
 
 if(noise == 0):
     noise_name = 's&p'
+    data = random_noise(img, mode=noise_name, seed=None, clip=True, amount=value)
 elif(noise == 1):
     noise_name = 'gaussian'
 elif(noise == 2):
@@ -21,7 +22,8 @@ else:
 value = float(sys.argv[4])    
     
 img = io.imread(sys.argv[1])
-data = random_noise(img, mode=noise_name, seed=None, clip=True, amount=value)
+if(noise != 0):
+    data = random_noise(img, mode=noise_name, seed=None, clip=True)
 # io.imsave('noise_s&p.png', data)
 # data = random_noise(img, mode='gaussian', seed=None, clip=True)
 # io.imsave('noise_gauss.png', data)
